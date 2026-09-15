@@ -26,8 +26,8 @@ export default function App() {
         <Route path="/business" element={<Business />} />
         <Route path="/pots" element={<Pots />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/business" element={<Business />} />
         <Route path="/case-studies/stoa" element={<CaseStudy />} />
+        <Route path="*" element={<Home />} />
       </Routes>
       <Footer />
     </div>

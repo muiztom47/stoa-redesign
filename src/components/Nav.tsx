@@ -130,10 +130,6 @@ export default function Nav() {
                   onClick={() => {
                     const target = s === "Business" ? "/business" : "/";
                     navigate(target);
-                    // Force a full refresh so each page loads fresh
-                    setTimeout(() => {
-                      window.location.href = target;
-                    }, 0);
                   }}
                   className="px-3 py-1.5 transition-colors"
                   style={{
