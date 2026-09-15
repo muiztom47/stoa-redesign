@@ -71,7 +71,20 @@ export default function Footer() {
               className="font-sans text-sm mt-6 max-w-xs leading-relaxed"
               style={{ color: C.slate }}
             >
-              A concept redesign by GrowUp.
+              A concept redesign by{" "}
+              <a
+                href="https://www.seo-growup.com/?utm_source=stoa-github&utm_medium=referral&utm_campaign=stoa-case-study"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: C.ink,
+                  textDecoration: "underline",
+                  textUnderlineOffset: 2,
+                }}
+              >
+                GrowUp
+              </a>
+              .
               <br />
               Not affiliated with Stoa.
             </p>
@@ -125,9 +138,15 @@ export default function Footer() {
           <span className="font-sans text-xs" style={{ color: C.faint }}>
             © 2026 · Rates illustrated from stoa.money
           </span>
-          <span className="font-sans text-xs" style={{ color: C.faint }}>
+          <a
+            href="https://www.seo-growup.com/?utm_source=stoa-github&utm_medium=referral&utm_campaign=stoa-case-study"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-sans text-xs transition-opacity hover:opacity-70"
+            style={{ color: C.faint }}
+          >
             Design concept by GrowUp
-          </span>
+          </a>
         </div>
       </div>
     </footer>

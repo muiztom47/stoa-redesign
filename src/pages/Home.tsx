@@ -87,24 +87,44 @@ const partners = ["Griffin", "Visa", "Plaid", "Experian", "AWS", "Microsoft Azur
 
 const faqs = [
   {
-    tag: "Term",
-    q: "What happens to my deposit at the end of the term?",
-    a: "Your full principal is returned to your nominated account at the end of the fixed twelve-month term. You can also choose to renew into a new Pot before the term ends.",
+    tag: "Limits",
+    q: "Is there a minimum or maximum amount I can deposit?",
+    a: "Minimum deposits start from £1,000 and vary by Pot, with some, like Financial Times, requiring more. There’s no fixed cap, but most people stay under £120,000 per Pot, since that’s the FSCS protection limit per depositor. Want to deposit more? Spread it across multiple Pots instead, and stay fully covered.",
   },
   {
-    tag: "Protection",
-    q: "Is my deposit protected?",
-    a: "Deposits are held by Griffin Bank, a UK-regulated institution. Eligible deposits are protected by the FSCS up to £120,000 per depositor, the same scheme that covers a standard savings account.",
+    tag: "Multiple Pots",
+    q: "Can I have more than one Stoa Pot at the same time?",
+    a: "Yes, as many as you like, even for the same brand. You could hold two active Netflix Pots side by side if you wanted. Add several Pots to a single deposit transaction, or open new ones any time. Each Pot runs on its own fixed 12-month term, independent of the rest.",
   },
   {
-    tag: "Access",
-    q: "Can I access the cash before twelve months is up?",
-    a: "Pots are fixed-term by design, which is what allows the yield to be paid out as a perk on day one rather than accrued slowly. Early access isn't available on standard Pots.",
+    tag: "Comparison",
+    q: "Why lock my money away when I could keep it in an easy-access account?",
+    a: "Easy-access accounts pay you slowly, in small amounts, spread across the year. A Stoa Pot pays your full value upfront, on day one, not drip-fed. You’re trading flexibility for a larger, guaranteed amount now. If you don’t need same-day access to that cash, it’s simply a better use of it.",
   },
   {
-    tag: "Yield",
-    q: "How is the perk value worked out?",
-    a: "Each Pot combines two sources: the interest Griffin Bank pays on your deposit, and a contribution from the merchant partner in exchange for prepaid, guaranteed custom. Both are fixed before you deposit, so the figure you see is the figure you get.",
+    tag: "Returns",
+    q: "Is this actually better than leaving my money in a high-interest savings account?",
+    a: "For a lot of savers, yes, but check the numbers yourself. A standard 4.5% account earns less than Stoa’s effective yield on the same deposit, and you’d wait a year to see any of it. Stoa pays the equivalent value upfront, as a perk. Compare it against your own current rate before deciding.",
+  },
+  {
+    tag: "Merchant Pricing",
+    q: "What happens if a merchant changes its prices during my term?",
+    a: "Nothing changes for you. Your perk value, deposit, and effective yield are all fixed the moment you open your Pot. If a merchant raises or lowers its prices later, that’s on their side. What you were promised at deposit is exactly what you receive.",
+  },
+  {
+    tag: "Discontinuation",
+    q: "What happens if the subscription or service I chose is discontinued?",
+    a: "If your chosen service changes or is discontinued before your term ends, Stoa works with you to swap in an equivalent perk of the same value. You keep the value you’re owed, you just choose a new way to receive it. Specific handling is confirmed in your Pot’s terms.",
+  },
+  {
+    tag: "Merchant Risk",
+    q: "What happens to my perk if the merchant goes out of business?",
+    a: "Your deposit itself is never at risk, that sits with Griffin Bank, not the merchant. The merchant’s share of your perk is paid to Stoa upfront, before it reaches you, so a merchant’s later troubles don’t undo a perk you’ve already been promised.",
+  },
+  {
+    tag: "Stoa Continuity",
+    q: "What happens if Stoa stops operating while my money is deposited?",
+    a: "Your money was never actually held by Stoa, it sits with Griffin Bank, a separately regulated custodian, from day one. If Stoa ceased operating, your deposit stays at Griffin Bank and remains FSCS-protected up to £120,000. Your cash isn’t exposed to Stoa’s own business risk.",
   },
 ];
 
@@ -197,6 +217,9 @@ function BrandBadge({ pot, size = 44, radius = 10 }) {
     </div>
   );
 }
+
+
+
 function TestimonialRotator({ items }) {
   const [i, setI] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
@@ -406,7 +429,7 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
       `}</style>
 
       {/* ---------------- HERO ---------------- */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-12 pt-16 pb-24 lg:pt-24 lg:pb-32">
+        <section className="mx-auto max-w-7xl px-6 lg:px-12 pt-16 pb-24 lg:pt-12 lg:pb-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left: editorial copy */}
           <div>
@@ -423,13 +446,14 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
               </span>
             </div>
             <h1 className="font-serif text-5xl sm:text-6xl leading-tight" style={{ color: C.ink }}>
-              Your savings can pay your bills instead of your bank.
+           Your savings are earning less than they should. Stoa fixes that on day one.
             </h1>
-            <p className="font-sans text-lg mt-7 max-w-lg leading-relaxed" style={{ color: C.slate }}>
-              Place a deposit for twelve months. We convert the yield into subscriptions and
-              services you already pay for, settled in full, on day one. Your principal is
-              returned at term, in full.
-            </p>
+         <p
+  className="font-sans mt-7 max-w-lg leading-relaxed"
+  style={{ color: C.slate, fontSize: '16px' }}
+>
+Deposit into a fixed-term savings pot for 12 months. Stoa uses part of the yield to cover subscriptions and services you already pay for, from Netflix and Amazon to the FT, and settles them upfront, in full. Your principal comes back at the end of the term. Untouched.
+</p>
 
             <div className="flex items-center gap-8 mt-10 mb-10">
               <div>
@@ -444,12 +468,15 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
             </div>
 
             <div className="flex items-center gap-4 font-sans">
-              <button
-                className="px-7 py-3.5 text-sm font-medium transition-colors"
+                         <a
+                href="https://app.stoa.money/personal/available-pots?_gl=1*179a2cm*_gcl_au*MTA1MjY0ODk5MC4xNzg5NDE1MzU2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-7 py-3.5 text-sm font-medium transition-colors inline-block text-center"
                 style={{ backgroundColor: C.brand, color: C.paper, borderRadius: 4, boxShadow: "0 10px 30px -12px rgba(59,40,204,0.6)" }}
               >
                 Open a Pot
-              </button>
+              </a>
               <button
                 onClick={() => scrollTo("calculator")}
                 className="px-7 py-3.5 text-sm font-medium transition-colors flex items-center gap-2"
@@ -461,7 +488,10 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
           </div>
 
           {/* Right: the certificate — light paper, black ink, blue accents */}
-          <div className="flex justify-center lg:justify-end" style={{ perspective: 1400 }}>
+          <div
+            className="flex justify-center lg:justify-end"
+            style={{ perspective: 1400, marginTop: -40 }}
+          >
             <div
               ref={cardRef}
               onMouseMove={handleMove}
@@ -689,21 +719,19 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
         className="font-sans text-xs mb-5"
         style={{ color: C.brand, letterSpacing: "0.18em" }}
       >
-        THE NUMBERS
+HOW IT WORKS
       </p>
       <h2
         className="font-serif text-5xl leading-tight"
         style={{ color: C.ink, letterSpacing: "-0.01em" }}
       >
-        See what a deposit is worth.
+      One deposit. Two income streams. Paid before the year even starts.
       </h2>
       <p
         className="font-sans text-lg mt-6 leading-relaxed"
         style={{ color: C.slate }}
       >
-        Every Pot is funded the same way: a share from Griffin Bank’s interest, and a share
-        from the merchant partner in exchange for prepaid, guaranteed custom. Both rates are
-        fixed before you commit, the figure below is the figure you get.
+Most savings interest compounds for a year before you see it. Stoa pays it upfront, funded by fixed bank interest, plus a merchant contribution for guaranteed, prepaid custom. Both rates are locked before you deposit.   
       </p>
     </div>
 
@@ -743,6 +771,15 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
           </p>
 
           {/* Custom slider: track + fill + thumb */}
+          <div
+            className="font-sans text-[11px] mb-3 flex items-center gap-1.5"
+            style={{ color: C.certFaint, letterSpacing: "0.06em" }}
+          >
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M8 6l-6 6 6 6M16 6l6 6-6 6" />
+            </svg>
+            DRAG TO ADJUST
+          </div>
           <div className="relative" style={{ height: 24 }}>
             {/* track */}
             <div
@@ -1073,9 +1110,9 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
           </div>
 
           {/* footnotes — CFO-grade */}
-          <p
+                  <p
             className="font-sans text-[10px] mt-6 leading-relaxed"
-            style={{ color: C.certFaint }}
+            style={{ color: "#011522", opacity: 0.7 }}
           >
             Figures are indicative and fixed at the point of deposit. Principal held with
             Griffin Bank, FSCS-protected up to £120,000 per depositor. Merchant contribution
@@ -1103,11 +1140,10 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
         className="font-serif leading-tight"
         style={{ color: C.ink, fontSize: 44, letterSpacing: "-0.01em" }}
       >
-        Pick where the value lands.
+      Pick your perk.
       </h2>
       <p className="font-sans mt-5 leading-relaxed" style={{ color: C.slate }}>
-        Eight Pots, each funded the same way. The perk is fixed at the point of deposit and
-        settled on day one, you choose what it becomes.
+Choose exactly how your yield is delivered. Lock in your deposit, and your chosen subscription or credit is settled instantly.
       </p>
     </div>
 
@@ -1314,18 +1350,31 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
       })}
     </div>
 
-    {/* footer note */}
-    <p
-      className="font-sans text-xs mt-12 max-w-2xl"
-      style={{ color: C.certFaint }}
-    >
-      Perk values are indicative and fixed at the point of deposit. Deposit amounts shown are
-      the minimum to unlock each Pot; larger deposits unlock proportionally larger perks or
-      higher-tier Pots.
-    </p>
+
+
+      {/* Explore all — links to the live app, opens in new tab */}
+    <div className="flex justify-center mt-14">
+      <a
+        href="https://app.stoa.money/available-pots?_gl=1*1638o89*_gcl_au*MTA1MjY0ODk5MC4xNzg5NDE1MzU2"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-sans text-sm font-medium px-10 py-3.5 transition-colors inline-block text-center"
+        style={{
+          backgroundColor: C.brand,
+          color: C.paper,
+          borderRadius: 6,
+          letterSpacing: "0.02em",
+          boxShadow: "0 10px 30px -12px rgba(59,40,204,0.5)",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.brandDark)}
+        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.brand)}
+      >
+        Explore all
+      </a>
+    </div>
+
   </div>
 </section>
-
 
 
       {/* ---------------- TRUST ---------------- */}
@@ -1382,15 +1431,15 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
                 className="font-serif mt-6"
                 style={{
                   color: C.plateInk,
-                  fontSize: 48,
+                  fontSize: 45,
                   lineHeight: 1.05,
                   letterSpacing: "-0.015em",
                 }}
               >
-                Held by a bank,
+            Regulated from the start,
                 <br />
                 <span style={{ fontStyle: "italic", color: C.plateAccent }}>
-                  not by us.
+             protected to the end.
                 </span>
               </h2>
 
@@ -1398,10 +1447,7 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
                 className="font-sans mt-7 leading-relaxed max-w-lg"
                 style={{ color: C.plateMuted, fontSize: 15 }}
               >
-                Deposits are placed with Griffin Bank, a UK-regulated institution. Stoa never
-                holds client cash directly. Eligible deposits are protected by the FSCS up to
-                £120,000 per depositor, the same scheme that covers an everyday current
-                account.
+            Griffin Bank holds an unrestricted UK banking licence and is authorised by the Prudential Regulation Authority. Your eligible deposits are protected by the FSCS up to £120,000 per depositor, the same scheme that covers an everyday current account.
               </p>
 
               {/* FSCS card */}
@@ -1543,170 +1589,309 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
         </div>
       </section>
 
-    {/* ---------------- MECHANISM ---------------- */}
+
+
+
+    {/* ---------------- CASE STUDY — CUSTOMER STORY ---------------- */}
 <section
+  id="customer-stories"
   className="border-t"
   style={{ borderColor: C.hair, backgroundColor: C.paper }}
 >
   <div className="mx-auto max-w-7xl px-6 lg:px-12 py-28">
-    {/* header */}
-    <div className="max-w-5xl mb-16">
-      <p
-        className="font-sans text-xs mb-5"
-        style={{ color: C.brand, letterSpacing: "0.18em" }}
+
+    {/* Chapter rule — matches customer story pages */}
+    <div
+      className="flex items-center justify-between mb-20 pb-5"
+      style={{ borderBottom: `1px solid ${C.hair}` }}
+    >
+      <span
+        className="font-sans text-[11px]"
+        style={{ color: C.certFaint, letterSpacing: "0.22em" }}
       >
-        HOW IT WORKS
-      </p>
-      <h2
-        className="font-serif leading-tight"
-        style={{ color: C.ink, fontSize: 48, letterSpacing: "-0.015em" }}
+        INDIVIDUAL STORY
+      </span>
+      <span
+        className="font-sans text-[11px] hidden sm:inline"
+        style={{ color: C.certFaint, letterSpacing: "0.22em" }}
       >
-        How are your perks funded?
-      </h2>
-      <p
-        className="font-sans text-lg mt-6 leading-relaxed"
-        style={{ color: C.slate }}
-      >
-        Stoa uses its algorithm to create value from both banking and merchant partners,
-        which funds the perks you receive upfront. Everything is built into the product,
-        with no hidden fees or charges.
-      </p>
+        STOA · LONDON
+      </span>
     </div>
 
-    {/* single unified flow panel */}
-    <div
-      className="relative overflow-hidden"
-      style={{
-        backgroundColor: C.certBg,
-        border: `1px solid ${C.certEdge}`,
-        borderRadius: 10,
-        boxShadow: "0 40px 80px -50px rgba(18,18,22,0.3)",
-      }}
-    >
-      {/* watermark numerals, echoes the certificate seal */}
-      <div
-        aria-hidden
-        className="hidden lg:block absolute font-serif"
-        style={{
-          top: -40,
-          right: -20,
-          fontSize: 280,
-          color: C.brandTint,
-          lineHeight: 1,
-          zIndex: 0,
-          fontStyle: "italic",
-        }}
+    {/* Story headline — Guglielmo format, exact */}
+    <div className="max-w-4xl mb-20">
+      <h2
+        className="font-serif leading-tight"
+        style={{ color: C.ink, fontSize: 52, letterSpacing: "-0.02em", lineHeight: 1.08 }}
       >
-        i–iii
-      </div>
+        How Guglielmo turned idle cash into{" "}
+        <span style={{ fontStyle: "italic", color: C.brand }}>Amazon value upfront</span>{" "}
+        using Stoa Pot.
+      </h2>
 
-      {/* top strip: the actual money flow, as a single ledger line */}
-      <div
-        className="relative z-10 px-8 md:px-12 pt-10 pb-8 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-0"
-        style={{ borderBottom: `1px solid ${C.certRule}` }}
-      >
+      {/* Meta row — the quick facts a case study carries */}
+      <div className="flex flex-wrap items-center gap-x-8 gap-y-3 mt-10">
         {[
-          { label: "YOUR DEPOSIT", value: "£10,000", tone: C.certInk },
-          { label: "BANK INTEREST", value: "+£305", tone: C.certMuted },
-          { label: "MERCHANT SHARE", value: "+£201", tone: C.certMuted },
-        ].map((step, i) => (
-          <React.Fragment key={step.label}>
-            <div className="flex-1">
-              <p
-                className="font-sans text-[10px] mb-2"
-                style={{ color: C.certFaint, letterSpacing: "0.16em" }}
-              >
-                {step.label}
-              </p>
-              <p
-                className="font-serif tabular-nums"
-                style={{ color: step.tone, fontSize: 30 }}
-              >
-                {step.value}
-              </p>
-            </div>
-            {i < 2 && (
-              <ArrowRight
-                size={18}
-                style={{ color: C.certFaint, flexShrink: 0, margin: "0 20px" }}
-              />
-            )}
-          </React.Fragment>
-        ))}
-        <ArrowRight size={18} style={{ color: C.brand, flexShrink: 0, margin: "0 20px" }} />
-        <div>
-          <p
-            className="font-sans text-[10px] mb-2"
-            style={{ color: C.brand, letterSpacing: "0.16em" }}
-          >
-            PAID TO YOU, DAY ONE
-          </p>
-          <p className="font-serif tabular-nums" style={{ color: C.brand, fontSize: 34 }}>
-            £506
-          </p>
-        </div>
-      </div>
-
-      {/* three-column explanation, numbered like ledger entries */}
-      <div className="relative z-10 grid md:grid-cols-3">
-        {[
-          {
-            n: "i.",
-            t: "Held, not spent by us.",
-            d: "Your deposit is placed with Griffin Bank for a fixed twelve-month term, in your name. Stoa never touches the cash directly.",
-          },
-          {
-            n: "ii.",
-            t: "Two sources, fixed upfront.",
-            d: "Griffin Bank pays standard interest. The merchant partner adds a contribution for prepaid, guaranteed custom. Both rates are locked before you commit.",
-          },
-          {
-            n: "iii.",
-            t: "Combined and settled immediately.",
-            d: "Both sources are added together and paid into your chosen Pot on day one — not accrued slowly like ordinary interest.",
-          },
-        ].map((step, i) => (
-          <div
-            key={step.n}
-            className="px-8 md:px-10 py-10"
-            style={{
-              borderTop: `1px solid ${C.certRule}`,
-              borderLeft: i > 0 ? `1px solid ${C.certRule}` : "none",
-            }}
-          >
-            <p className="font-serif text-lg mb-4" style={{ color: C.brand }}>
-              {step.n}
-            </p>
-            <h3 className="font-serif text-xl leading-snug" style={{ color: C.ink }}>
-              {step.t}
-            </h3>
-            <p className="font-sans text-sm mt-4 leading-relaxed" style={{ color: C.slate }}>
-              {step.d}
-            </p>
+          ["CUSTOMER", "Guglielmo"],
+          ["POT", "Amazon"],
+          ["RETURN", "~5% tax-free"],
+          ["TERM", "12 months"],
+        ].map(([k, v]) => (
+          <div key={k} className="flex items-baseline gap-2">
+            <span
+              className="font-sans text-[10px]"
+              style={{ color: C.certFaint, letterSpacing: "0.18em" }}
+            >
+              {k}
+            </span>
+            <span className="font-sans text-sm" style={{ color: C.ink }}>
+              {v}
+            </span>
           </div>
         ))}
       </div>
     </div>
 
-    {/* bottom summary strip — the payoff line */}
+    {/* Two-column editorial — sidebar facts + narrative Q&A */}
+    <div className="grid lg:grid-cols-[1fr_1.6fr] gap-16 lg:gap-24">
+
+      {/* LEFT — sticky fact card, mirrors the certificate language */}
+      <div className="lg:sticky lg:top-28 self-start">
+        <div
+          className="p-7"
+          style={{
+            backgroundColor: C.paper2,
+            border: `1px solid ${C.hair}`,
+            borderRadius: 12,
+          }}
+        >
+          <p
+            className="font-sans text-[10px] mb-6"
+            style={{ color: C.certFaint, letterSpacing: "0.22em" }}
+          >
+            AT A GLANCE
+          </p>
+
+          <div className="space-y-5">
+            <div>
+              <p
+                className="font-sans text-[10px] mb-1.5"
+                style={{ color: C.certFaint, letterSpacing: "0.14em" }}
+              >
+                SPARE CASH DEPLOYED
+              </p>
+              <p className="font-serif tabular-nums" style={{ color: C.ink, fontSize: 28, lineHeight: 1 }}>
+                A portion
+              </p>
+            </div>
+
+            <div style={{ height: 1, backgroundColor: C.hair }} />
+
+            <div>
+              <p
+                className="font-sans text-[10px] mb-1.5"
+                style={{ color: C.certFaint, letterSpacing: "0.14em" }}
+              >
+                VALUE RECEIVED
+              </p>
+              <p className="font-serif" style={{ color: C.ink, fontSize: 22, lineHeight: 1.2 }}>
+                Amazon, upfront
+              </p>
+            </div>
+
+            <div>
+              <p
+                className="font-sans text-[10px] mb-1.5"
+                style={{ color: C.certFaint, letterSpacing: "0.14em" }}
+              >
+                RETURN
+              </p>
+              <p className="font-serif tabular-nums" style={{ color: C.ink, fontSize: 22, lineHeight: 1 }}>
+                ~5%
+              </p>
+            </div>
+
+            <div>
+              <p
+                className="font-sans text-[10px] mb-1.5"
+                style={{ color: C.certFaint, letterSpacing: "0.14em" }}
+              >
+                LOCK-IN
+              </p>
+              <p className="font-serif" style={{ color: C.ink, fontSize: 22, lineHeight: 1 }}>
+                One year
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="mt-7 pt-5 flex items-center gap-2 font-sans text-[10px]"
+            style={{
+              borderTop: `1px solid ${C.hair}`,
+              color: C.certFaint,
+              letterSpacing: "0.14em",
+            }}
+          >
+            <ShieldCheck size={12} style={{ color: C.brand }} />
+            FSCS PROTECTED · £120,000
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT — the Q&A narrative, exactly as the Guglielmo page */}
+      <div>
+
+        {/* Q1 */}
+        <div className="mb-14">
+          <h3
+            className="font-serif leading-snug"
+            style={{
+              color: C.ink,
+              fontSize: 24,
+              letterSpacing: "-0.01em",
+              lineHeight: 1.3,
+            }}
+          >
+            What made you decide to deposit your money into Stoa Pots?
+          </h3>
+          <p
+            className="font-sans text-base mt-5 leading-relaxed max-w-2xl"
+            style={{ color: C.slate }}
+          >
+            I had a fairly big personal expense coming up and was planning to spend on
+            Amazon anyway, so it felt like a good fit. I used a portion of spare cash to
+            try it out, and being able to access the value upfront, along with around a 5%
+            tax free return and a one year lock-in, made it an easy decision.
+          </p>
+        </div>
+
+        {/* Q2 */}
+        <div className="mb-14">
+          <h3
+            className="font-serif leading-snug"
+            style={{
+              color: C.ink,
+              fontSize: 24,
+              letterSpacing: "-0.01em",
+              lineHeight: 1.3,
+            }}
+          >
+            How did it feel getting the perks upfront instead of waiting for interest?
+          </h3>
+          <p
+            className="font-sans text-base mt-5 leading-relaxed max-w-2xl"
+            style={{ color: C.slate }}
+          >
+            It felt more immediate and practical. Instead of waiting to see small amounts of
+            interest build up, you get something you can actually use straight away, which
+            makes it feel more worthwhile.
+          </p>
+        </div>
+
+        {/* Q3 */}
+        <div className="mb-14">
+          <h3
+            className="font-serif leading-snug"
+            style={{
+              color: C.ink,
+              fontSize: 24,
+              letterSpacing: "-0.01em",
+              lineHeight: 1.3,
+            }}
+          >
+            What would you say to someone whose cash is sitting in a low or zero interest
+            current or savings account and is thinking about opening their first Stoa Pot?
+          </h3>
+          <p
+            className="font-sans text-base mt-5 leading-relaxed max-w-2xl"
+            style={{ color: C.slate }}
+          >
+            If your money is not really doing much where it is, it is worth looking at
+            alternatives like this. It is a different approach. You are not focused on
+            earning interest, but on getting value from things you would likely spend on
+            anyway. As long as you are comfortable with how it works, like the lock-in
+            period, it can be a useful option alongside a well diversified portfolio.
+          </p>
+        </div>
+
+        {/* Signature pull quote */}
+        <div
+          className="mt-20 pl-8 py-2"
+          style={{ borderLeft: `3px solid ${C.brand}` }}
+        >
+          <p
+            className="font-serif italic leading-snug"
+            style={{
+              color: C.ink,
+              fontSize: 26,
+              letterSpacing: "-0.01em",
+              lineHeight: 1.35,
+            }}
+          >
+            "You get something you can actually use straight away, which makes it feel
+            more worthwhile."
+          </p>
+          <p
+            className="font-sans text-xs mt-5"
+            style={{ color: C.certFaint, letterSpacing: "0.14em" }}
+          >
+            GUGLIELMO · AMAZON POT
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Bottom CTA — mirrors customer story footer */}
     <div
-      className="mt-12 pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
+      className="mt-24 pt-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
       style={{ borderTop: `1px solid ${C.hair}` }}
     >
-      <div className="flex items-center gap-3">
-        <ShieldCheck size={16} style={{ color: C.brand }} />
-        <p className="font-sans text-sm" style={{ color: C.ink }}>
-          No hidden fees. No monthly charges. Everything is built into the product.
+      <div>
+        <p
+          className="font-sans text-[10px] mb-2"
+          style={{ color: C.certFaint, letterSpacing: "0.22em" }}
+        >
+          NEXT
+        </p>
+        <p className="font-serif text-2xl" style={{ color: C.ink }}>
+          See what your deposit is worth.
         </p>
       </div>
-      <button
-        onClick={() => scrollTo("calculator")}
-        className="font-sans text-sm font-medium flex items-center gap-2 self-start md:self-auto"
-        style={{ color: C.brand, letterSpacing: "0.02em" }}
-      >
-        See it in numbers <ArrowRight size={14} />
-      </button>
+
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => scrollTo("calculator")}
+          className="font-sans text-sm font-medium flex items-center gap-2 px-6 py-3"
+          style={{
+            color: C.paper,
+            backgroundColor: C.brand,
+            borderRadius: 6,
+            letterSpacing: "0.02em",
+            boxShadow: "0 10px 30px -12px rgba(59,40,204,0.5)",
+          }}
+        >
+          Try the calculator <ArrowRight size={14} />
+        </button>
+
+        <a
+          href="https://www.stoa.money/customer-stories"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-sans text-sm font-medium flex items-center gap-2 px-6 py-3"
+          style={{
+            color: C.brand,
+            backgroundColor: "transparent",
+            border: `1px solid ${C.brand}`,
+            borderRadius: 6,
+            letterSpacing: "0.02em",
+          }}
+        >
+          All customer stories <ArrowRight size={14} />
+        </a>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -1759,29 +1944,29 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
           className="font-sans text-xs mb-6"
           style={{ color: C.brand, letterSpacing: "0.18em" }}
         >
-          FREQUENTLY ASKED
+        BEFORE YOU DEPOSIT
         </p>
 
-        <h2
-          className="font-serif leading-tight"
-          style={{
-            color: C.ink,
-            fontSize: 52,
-            letterSpacing: "-0.015em",
-            lineHeight: 1.05,
-          }}
-        >
-          Questions
-          <br />
-          <span style={{ fontStyle: "italic" }}>worth asking.</span>
-        </h2>
+<h2
+  className="font-serif leading-tight"
+  style={{
+    color: C.ink,
+    fontSize: 52,
+    letterSpacing: "-0.015em",
+    lineHeight: 1.05,
+  }}
+>
+  Everything worth
+  <br />
+  <span style={{ fontStyle: "italic" }}>knowing first.</span>
+</h2>
+
 
         <p
-          className="font-sans text-base mt-7 leading-relaxed max-w-md"
-          style={{ color: C.slate }}
+          className="font-sans mt-7 leading-relaxed max-w-md"
+          style={{ color: C.slate, fontSize: "14.5px" }}
         >
-          The four that come up most often. If yours isn't here, we'd rather answer it
-          directly than leave you guessing.
+   From access and limits to merchant risk and returns, here’s what you’ll want to understand before opening a Pot.
         </p>
 
         {/* contact card */}
@@ -1819,8 +2004,11 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
             Speak with the team about a Personal or Business arrangement. No obligation, no
             script.
           </p>
-          <button
-            className="mt-5 w-full py-3 text-xs font-medium transition-colors"
+       <a
+            href="https://www.stoa.money/contact"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 w-full py-3 text-xs font-medium transition-colors inline-block text-center"
             style={{
               backgroundColor: C.brand,
               color: C.paper,
@@ -1829,7 +2017,7 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
             }}
           >
             Book a 15-minute call
-          </button>
+          </a>
         </div>
       </div>
 
@@ -2043,12 +2231,15 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
           style={{ color: "rgba(255,255,255,0.62)", fontSize: 17 }}
         >
           Open a Pot in minutes, or speak with the team about a Business arrangement. No
-          obligation, no script — the figures speak first.
+          obligation, no script, the figures speak first.
         </p>
 
         {/* CTA row */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-12 font-sans">
-          <button
+          <a
+            href="https://app.stoa.money/personal/available-pots?_gl=1*179a2cm*_gcl_au*MTA1MjY0ODk5MC4xNzg5NDE1MzU2"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group px-8 py-4 text-sm font-medium transition-all flex items-center justify-center gap-3"
             style={{
               backgroundColor: C.brand,
@@ -2062,10 +2253,13 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
             <span className="inline-block transition-transform group-hover:translate-x-1">
               <ArrowRight size={15} />
             </span>
-          </button>
+          </a>
 
-          <button
-            className="px-8 py-4 text-sm font-medium transition-colors"
+          <a
+            href="https://www.stoa.money/contact"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-4 text-sm font-medium transition-colors text-center"
             style={{
               border: "1px solid rgba(255,255,255,0.22)",
               color: "#FFFFFF",
@@ -2082,7 +2276,7 @@ const vsSavings = totalPerk - deposit * 0.045;                // vs a 4.5% easy-
             }}
           >
             Speak to the team
-          </button>
+          </a>
         </div>
 
         {/* trust row */}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 /* Design tokens — same as Home */
@@ -17,20 +17,23 @@ export default function Nav() {
   const location = useLocation();
   const isBusiness = location.pathname.startsWith("/business");
 
+  const [activeSection, setActiveSection] = useState("");
+
   // Personal nav links
   const personalLinks = [
-    { label: "The numbers", id: "calculator" },
+    { label: "The Numbers", id: "calculator" },
     { label: "Pots", id: "pots" },
-    { label: "Trust & security", id: "trust" },
+        { label: "Trust & Security", id: "trust" },
+    { label: "Customer Stories", id: "customer-stories" },
     { label: "FAQ", id: "faq" },
   ];
 
   // Business nav links
   const businessLinks = [
-    { label: "Why Stoa", id: "why" },
-    { label: "The numbers", id: "calculator" },
+    { label: "The Numbers", id: "calculator" },
     { label: "Catalogue", id: "pots" },
-    { label: "Trust & security", id: "trust" },
+        { label: "Trust & Security", id: "trust" },
+    { label: "Customer Stories", id: "customer-stories" },
     { label: "FAQ", id: "faq" },
   ];
 
@@ -40,6 +43,54 @@ export default function Nav() {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  // Scroll spy — tracks which section is currently in view
+  useEffect(() => {
+    const ids = links.map((l) => l.id);
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      () => {
+        // Ask the DOM directly: which tracked section is highest
+        // but still below the sticky nav?
+        const navOffset = 96;
+        const candidates = sections
+          .map((s) => ({
+            id: s.id,
+            top: s.getBoundingClientRect().top,
+          }))
+          .filter((s) => s.top <= navOffset + 40)   // has crossed the nav
+          .sort((a, b) => b.top - a.top);           // closest to nav wins
+
+        if (candidates.length) {
+          setActiveSection(candidates[0].id);
+        } else {
+          setActiveSection("");
+        }
+      },
+      {
+        rootMargin: "-96px 0px -40% 0px",
+        threshold: 0,
+      }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+
+    // Clear highlight when scrolled back to the very top
+    const handleScroll = () => {
+      if (window.scrollY < 120) setActiveSection("");
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      sections.forEach((s) => observer.unobserve(s));
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [links]);
 
   return (
     <nav
@@ -75,7 +126,14 @@ export default function Nav() {
               return (
                 <button
                   key={s}
-                  onClick={() => navigate(s === "Business" ? "/business" : "/")}
+                  onClick={() => {
+                    const target = s === "Business" ? "/business" : "/";
+                    navigate(target);
+                    // Force a full refresh so each page loads fresh
+                    setTimeout(() => {
+                      window.location.href = target;
+                    }, 0);
+                  }}
                   className="px-3 py-1.5 transition-colors"
                   style={{
                     color: isActive ? C.ink : C.slate,
@@ -97,20 +155,41 @@ export default function Nav() {
           className="hidden lg:flex items-center gap-8 text-sm"
           style={{ color: C.slate }}
         >
-          {links.map((l) => (
-            <button
-              key={l.label}
-              onClick={() => scrollTo(l.id)}
-              className="hover:opacity-70 transition-opacity"
-            >
-              {l.label}
-            </button>
-          ))}
+          {links.map((l) => {
+            const isActive = activeSection === l.id;
+            return (
+              <button
+                key={l.label}
+                onClick={() => scrollTo(l.id)}
+                className="transition-colors"
+                style={{
+                  color: isActive ? C.brand : C.slate,
+                  fontWeight: isActive ? 600 : 500,
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) e.currentTarget.style.color = C.ink;
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) e.currentTarget.style.color = C.slate;
+                }}
+              >
+                {l.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* RIGHT — CTA */}
-        <button
-          className="text-sm font-medium px-5 py-2.5 transition-colors"
+     <a
+          href={
+            isBusiness
+              ? "https://app.stoa.money/business/available-pots"
+              : "https://app.stoa.money/personal/available-pots?_gl=1*179a2cm*_gcl_au*MTA1MjY0ODk5MC4xNzg5NDE1MzU2"
+          }
+          
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm font-medium px-5 py-2.5 transition-colors inline-block"
           style={{
             backgroundColor: C.brand,
             color: C.paper,
@@ -122,10 +201,9 @@ export default function Nav() {
           onMouseLeave={(e) =>
             (e.currentTarget.style.backgroundColor = C.brand)
           }
-          onClick={() => scrollTo("pots")}
         >
           {isBusiness ? "Open a Business Pot" : "Open a Pot"}
-        </button>
+        </a>
       </div>
     </nav>
   );
