@@ -1,45 +1,133 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+const C = {
+  ink: "#FFFFFF",
+  paper: "#0D1116",
+  paper2: "#11151A",
+  slate: "rgba(255,255,255,0.62)",
+  faint: "rgba(255,255,255,0.42)",
+  hair: "rgba(255,255,255,0.08)",
+  hairStrong: "rgba(255,255,255,0.14)",
+  brand: "#FFFFFF",
+};
+
+const StoaLogo =
+  "https://cdn.prod.website-files.com/666c0d22b96d40ee9bec9c0c/69e10e59acc70c12e83b7de7_Stoa%20Logo.svg";
+
 export default function Footer() {
+  const navigate = useNavigate();
+
+  const columns = [
+    {
+      title: "Product",
+      links: [
+        { label: "Pots", to: "/pots" },
+        { label: "How it works", to: "/how-it-works" },
+        { label: "The numbers", to: "/" },
+      ],
+    },
+    {
+      title: "Business",
+      links: [
+        { label: "Business Pots", to: "/business" },
+        { label: "Treasury", to: "/business" },
+        { label: "Speak to the team", to: "/business" },
+      ],
+    },
+    {
+      title: "Trust",
+      links: [
+        { label: "FSCS protection", to: "/" },
+        { label: "Griffin Bank", to: "/" },
+        { label: "Security", to: "/" },
+      ],
+    },
+  ];
+
   return (
-    <footer className="border-t border-ink-700 bg-ink-950">
-      <div className="mx-auto max-w-content px-6 py-14 md:px-10">
-        <div className="flex flex-col justify-between gap-10 md:flex-row">
+    <footer
+      style={{
+        backgroundColor: C.paper,
+        borderTop: `1px solid ${C.hair}`,
+        color: C.ink,
+      }}
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16">
+        <div className="grid lg:grid-cols-[1.2fr_2fr] gap-16 lg:gap-24">
+          {/* brand block */}
           <div>
-            <div className="font-display text-2xl italic text-stone-50">Stoa</div>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-500">
-              A speculative redesign concept created for a design portfolio. Not an official Stoa product.
+            <img
+              src={StoaLogo}
+              alt="Stoa"
+              style={{
+                height: 24,
+                width: "auto",
+                display: "block",
+                filter: "brightness(0) invert(1)",
+              }}
+            />
+            <p
+              className="font-sans text-sm mt-6 max-w-xs leading-relaxed"
+              style={{ color: C.slate }}
+            >
+              A concept redesign by GrowUp.
+              <br />
+              Not affiliated with Stoa.
             </p>
+
+            <button
+              onClick={() => navigate("/case-studies/stoa")}
+              className="font-sans text-xs inline-flex items-center gap-1.5 mt-4 transition-opacity hover:opacity-70"
+              style={{ color: C.faint, letterSpacing: "0.04em", background: "none", border: "none", padding: 0, cursor: "pointer" }}
+            >
+              See the thinking →
+            </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-10 text-sm sm:grid-cols-3">
-            <div>
-              <div className="text-stone-300">Product</div>
-              <ul className="mt-3 space-y-2 text-ink-500">
-                <li>Stoa Pots</li>
-                <li>How it works</li>
-                <li>Saving Score</li>
-              </ul>
-            </div>
-            <div>
-              <div className="text-stone-300">Company</div>
-              <ul className="mt-3 space-y-2 text-ink-500">
-                <li>About us</li>
-                <li>Customer stories</li>
-                <li>Contact</li>
-              </ul>
-            </div>
-            <div>
-              <div className="text-stone-300">Support</div>
-              <ul className="mt-3 space-y-2 text-ink-500">
-                <li>Help centre</li>
-                <li>FSCS protection</li>
-              </ul>
-            </div>
+          {/* columns */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
+            {columns.map((col) => (
+              <div key={col.title}>
+                <p
+                  className="font-sans text-xs mb-4"
+                  style={{
+                    color: C.ink,
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  {col.title}
+                </p>
+                <ul className="space-y-3">
+                  {col.links.map((l) => (
+                    <li key={l.label}>
+                      <button
+                        onClick={() => navigate(l.to)}
+                        className="font-sans text-sm text-left transition-opacity hover:opacity-60"
+                        style={{ color: C.slate }}
+                      >
+                        {l.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-ink-800 pt-6 text-xs text-ink-500 md:flex-row md:items-center md:justify-between">
-          <span>© 2026 Stoa (portfolio concept). Deposits illustrated at real published rates from stoa.money.</span>
-          <span>Design concept by Muiz</span>
+        {/* bottom rule */}
+        <div
+          className="mt-14 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+          style={{ borderTop: `1px solid ${C.hair}` }}
+        >
+          <span className="font-sans text-xs" style={{ color: C.faint }}>
+            © 2026 · Rates illustrated from stoa.money
+          </span>
+          <span className="font-sans text-xs" style={{ color: C.faint }}>
+            Design concept by GrowUp
+          </span>
         </div>
       </div>
     </footer>

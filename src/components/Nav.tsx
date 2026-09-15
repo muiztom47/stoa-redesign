@@ -1,81 +1,132 @@
-import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const links = [
-  { label: "How it works", to: "/how-it-works" },
-  { label: "Pots", to: "/pots" },
-  { label: "About", to: "/" },
-];
+/* Design tokens — same as Home */
+const C = {
+  ink: "#121216",
+  paper: "#FFFFFF",
+  slate: "#5B6472",
+  brand: "#3B28CC",
+  brandDark: "#2F20A3",
+  brass: "#3B28CC",
+  hair: "#E4E2E8",
+};
 
 export default function Nav() {
+  const navigate = useNavigate();
   const location = useLocation();
-  const [open, setOpen] = useState(false);
+  const isBusiness = location.pathname.startsWith("/business");
+
+  // Personal nav links
+  const personalLinks = [
+    { label: "The numbers", id: "calculator" },
+    { label: "Pots", id: "pots" },
+    { label: "Trust & security", id: "trust" },
+    { label: "FAQ", id: "faq" },
+  ];
+
+  // Business nav links
+  const businessLinks = [
+    { label: "Why Stoa", id: "why" },
+    { label: "The numbers", id: "calculator" },
+    { label: "Catalogue", id: "pots" },
+    { label: "Trust & security", id: "trust" },
+    { label: "FAQ", id: "faq" },
+  ];
+
+  const links = isBusiness ? businessLinks : personalLinks;
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink-700/60 bg-ink-900/90 backdrop-blur">
-      <div className="mx-auto flex max-w-content items-center justify-between px-6 py-4 md:px-10">
-        <Link to="/" className="font-display text-2xl italic text-stone-50">
-          Stoa
-        </Link>
+    <nav
+      className="sticky top-0 z-50 font-sans"
+      style={{
+        backgroundColor: `${C.paper}F2`,
+        backdropFilter: "blur(8px)",
+        borderBottom: `1px solid ${C.hair}`,
+      }}
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-12 py-5 flex items-center justify-between">
+        {/* LEFT — wordmark + tabs */}
+        <div className="flex items-center gap-10">
+         
+       <img
+  src="https://cdn.prod.website-files.com/666c0d22b96d40ee9bec9c0c/69e10e59acc70c12e83b7de7_Stoa%20Logo.svg"
+  alt="Stoa"
+  onClick={() => navigate("/")}
+  style={{
+    height: 28,
+    width: "auto",
+    cursor: "pointer",
+    display: "block",
+  }}
+/>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          <div className="flex items-center gap-5 text-sm text-stone-300">
-            <span className="cursor-default text-stone-50">Personal</span>
-            <span className="cursor-default text-ink-500">Business</span>
+          <div
+            className="hidden md:flex items-center text-sm"
+            style={{ color: C.slate }}
+          >
+            {["Personal", "Business"].map((s) => {
+              const isActive = s === "Business" ? isBusiness : !isBusiness;
+              return (
+                <button
+                  key={s}
+                  onClick={() => navigate(s === "Business" ? "/business" : "/")}
+                  className="px-3 py-1.5 transition-colors"
+                  style={{
+                    color: isActive ? C.ink : C.slate,
+                    borderBottom: isActive
+                      ? `1px solid ${C.brass}`
+                      : "1px solid transparent",
+                    fontWeight: isActive ? 600 : 500,
+                  }}
+                >
+                  {s}
+                </button>
+              );
+            })}
           </div>
-          <div className="h-4 w-px bg-ink-700" />
+        </div>
+
+        {/* MIDDLE — page anchors */}
+        <div
+          className="hidden lg:flex items-center gap-8 text-sm"
+          style={{ color: C.slate }}
+        >
           {links.map((l) => (
-            <Link
+            <button
               key={l.label}
-              to={l.to}
-              className={`focus-ring text-sm transition-colors ${
-                location.pathname === l.to ? "text-stone-50" : "text-stone-300 hover:text-stone-50"
-              }`}
+              onClick={() => scrollTo(l.id)}
+              className="hover:opacity-70 transition-opacity"
             >
               {l.label}
-            </Link>
+            </button>
           ))}
-        </nav>
-
-        <div className="hidden items-center gap-6 md:flex">
-          <span className="cursor-default text-sm text-stone-300">Log in</span>
-          <Link
-            to="/pots"
-            className="focus-ring rounded-sm border border-brass-500 px-4 py-2 text-sm text-brass-400 transition-colors hover:bg-brass-500 hover:text-ink-950"
-          >
-            Open a Stoa Pot
-          </Link>
         </div>
 
+        {/* RIGHT — CTA */}
         <button
-          className="focus-ring text-stone-50 md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-          aria-expanded={open}
+          className="text-sm font-medium px-5 py-2.5 transition-colors"
+          style={{
+            backgroundColor: C.brand,
+            color: C.paper,
+            borderRadius: 4,
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.backgroundColor = C.brandDark)
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.backgroundColor = C.brand)
+          }
+          onClick={() => scrollTo("pots")}
         >
-          <span className="block h-px w-6 bg-current" />
-          <span className="mt-1.5 block h-px w-6 bg-current" />
+          {isBusiness ? "Open a Business Pot" : "Open a Pot"}
         </button>
       </div>
-
-      {open && (
-        <div className="border-t border-ink-700 px-6 py-4 md:hidden">
-          <nav className="flex flex-col gap-4">
-            {links.map((l) => (
-              <Link key={l.label} to={l.to} className="text-sm text-stone-300" onClick={() => setOpen(false)}>
-                {l.label}
-              </Link>
-            ))}
-            <Link
-              to="/pots"
-              className="mt-2 w-fit rounded-sm border border-brass-500 px-4 py-2 text-sm text-brass-400"
-              onClick={() => setOpen(false)}
-            >
-              Open a Stoa Pot
-            </Link>
-          </nav>
-        </div>
-      )}
-    </header>
+    </nav>
   );
 }
