@@ -24,22 +24,14 @@ const ArrowRight = ({ size = 16, style }: IconProps) => (
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
-const ChevronDown = ({ size = 16, style }: IconProps) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={style}>
-    <path d="M6 9l6 6 6-6" />
-  </svg>
-);
+
 const Briefcase = ({ size = 16, style }: IconProps) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={style}>
     <rect x="2" y="7" width="20" height="14" rx="2" />
     <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
   </svg>
 );
-const Check = ({ size = 14, style }: IconProps) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={style}>
-    <path d="M5 12l5 5L20 7" />
-  </svg>
-);
+
 
 
 const testimonials = [
@@ -181,15 +173,15 @@ const businessFaqs = [
 const INSTITUTIONAL_RATE = 0.0305;
 const MERCHANT_RATE = 0.0201;
 
-const gbp = (n) =>
+const gbp = (n: number) =>
   n.toLocaleString("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 2 });
 
 /* ---------------------------------------------------------------
    Brand badge
 ----------------------------------------------------------------*/
-function BrandBadge({ pot, size = 42 }) {
+function BrandBadge({ pot, size = 42 }: { pot: any; size?: number }) {
   const [failed, setFailed] = useState(false);
-  const hasKey = LOGO_DEV_KEY && LOGO_DEV_KEY !== "YOUR_LOGO_DEV_KEY";
+  const hasKey = Boolean(LOGO_DEV_KEY);
   return (
     <div
       className="flex items-center justify-center shrink-0"
@@ -226,7 +218,7 @@ function BrandBadge({ pot, size = 42 }) {
 
 
 
-function TestimonialRotator({ items }) {
+function TestimonialRotator({ items }: { items: any[] }) {
   const [i, setI] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
   const n = items.length;
@@ -237,8 +229,8 @@ function TestimonialRotator({ items }) {
     return () => clearInterval(id);
   }, [paused, n]);
 
-  const go = (dir) => setI((k) => (k + dir + n) % n);
-  const idxOf = (offset) => (i + offset + n) % n;
+  const go = (dir: number) => setI((k) => (k + dir + n) % n);
+  const idxOf = (offset: number) => (i + offset + n) % n;
 
   const Card = ({ item, role }) => {
     const isCenter = role === "center";
