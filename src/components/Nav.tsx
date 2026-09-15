@@ -39,7 +39,7 @@ export default function Nav() {
 
   const links = isBusiness ? businessLinks : personalLinks;
 
-  const scrollTo = (id) => {
+  const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -49,7 +49,7 @@ export default function Nav() {
     const ids = links.map((l) => l.id);
     const sections = ids
       .map((id) => document.getElementById(id))
-      .filter(Boolean);
+      .filter((el): el is HTMLElement => el !== null);
 
     if (!sections.length) return;
 
@@ -59,6 +59,7 @@ export default function Nav() {
         // but still below the sticky nav?
         const navOffset = 96;
         const candidates = sections
+          .filter((s): s is HTMLElement => s !== null)
           .map((s) => ({
             id: s.id,
             top: s.getBoundingClientRect().top,

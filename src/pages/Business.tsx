@@ -3,13 +3,15 @@ import React, { useState, useEffect, useRef } from "react";
 /* ---------------------------------------------------------------
    Small inline icons
 ----------------------------------------------------------------*/
-const ShieldCheck = ({ size = 16, style }) => (
+type IconProps = { size?: number; style?: React.CSSProperties };
+
+const ShieldCheck = ({ size = 16, style }: IconProps) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={style}>
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
     <path d="M9 12l2 2 4-4" />
   </svg>
 );
-const Landmark = ({ size = 16, style }) => (
+const Landmark = ({ size = 16, style }: IconProps) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={style}>
     <path d="M3 21h18" />
     <path d="M4 21V10M20 21V10" />
@@ -17,30 +19,27 @@ const Landmark = ({ size = 16, style }) => (
     <path d="M9 21v-7M15 21v-7" />
   </svg>
 );
-const ArrowRight = ({ size = 16, style }) => (
+const ArrowRight = ({ size = 16, style }: IconProps) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={style}>
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
-const ChevronDown = ({ size = 16, style }) => (
+const ChevronDown = ({ size = 16, style }: IconProps) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={style}>
     <path d="M6 9l6 6 6-6" />
   </svg>
 );
-const Briefcase = ({ size = 16, style }) => (
+const Briefcase = ({ size = 16, style }: IconProps) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={style}>
     <rect x="2" y="7" width="20" height="14" rx="2" />
     <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
   </svg>
 );
-const Check = ({ size = 14, style }) => (
+const Check = ({ size = 14, style }: IconProps) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={style}>
     <path d="M5 12l5 5L20 7" />
   </svg>
 );
-
-
-
 
 
 const testimonials = [
